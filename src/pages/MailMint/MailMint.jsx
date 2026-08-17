@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import styles from './MailMint.module.css';
 import Navbar from '../../components/Navbar/Navbar';
-import mailmintHero from '../../assets/mockup.png';
-import dashboard from '../../assets/mailmint-dashboard.png';
-import generationImg from '../../assets/mailmint-generation.png';
-import loginImg from '../../assets/mailmint-login.png';
-import libraryImg from '../../assets/mailmint-library.png';
-import signupImg from '../../assets/mailmint-signup.png';
-import draftsImg from '../../assets/mailmint-drafts.png';
-import landingHero from '../../assets/Mailmint hero.png';
+import mailmintHero from '../../assets/mockup.webp';
+import dashboard from '../../assets/mailmint-dashboard.webp';
+import generationImg from '../../assets/mailmint-generation.webp';
+import loginImg from '../../assets/mailmint-login.webp';
+import libraryImg from '../../assets/mailmint-library.webp';
+import signupImg from '../../assets/mailmint-signup.webp';
+import draftsImg from '../../assets/mailmint-drafts.webp';
+import landingHero from '../../assets/Mailmint hero.webp';
 
-/* ---------- Inline icons (stroke, currentColor) — portfolio icon system ---------- */
+/* ---------- Inline icons (stroke, currentColor): portfolio icon system ---------- */
 const Icon = {
   ArrowLeft: (p) => (
     <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
@@ -187,7 +187,7 @@ const MailMint = () => {
       <main className={styles.main}>
         <article className={styles.content}>
           {/* HERO IMAGE */}
-          <img src={mailmintHero} alt="MailMint running on a laptop" className={styles.heroImg} />
+          <img src={mailmintHero} alt="MailMint running on a laptop" className={styles.heroImg} fetchPriority="high" decoding="async" />
 
           {/* TITLE ROW */}
           <div className={styles.titleRow}>
@@ -208,7 +208,7 @@ const MailMint = () => {
             <span className={styles.statusPill}>Live MVP · In active development</span>
           </div>
 
-          {/* 01 — THE PROBLEM */}
+          {/* 01: THE PROBLEM */}
           <section className={styles.section}>
             <SectionHeading num="01">The problem</SectionHeading>
             <div className={styles.prose}>
@@ -240,7 +240,7 @@ const MailMint = () => {
             </div>
           </section>
 
-          {/* 02 — MY ROLE & CONTRIBUTION */}
+          {/* 02: MY ROLE & CONTRIBUTION */}
           <section className={styles.section}>
             <SectionHeading num="02">My role and contribution</SectionHeading>
             <span className={styles.roleTag}>Lead Product Designer</span>
@@ -275,7 +275,7 @@ const MailMint = () => {
             </div>
           </section>
 
-          {/* 03 — DESIGN PROCESS & KEY DECISIONS */}
+          {/* 03: DESIGN PROCESS & KEY DECISIONS */}
           <section className={styles.section}>
             <SectionHeading num="03">Design process &amp; key decisions</SectionHeading>
 
@@ -314,7 +314,7 @@ const MailMint = () => {
                 </p>
                 <p>
                   Working through these issues meant learning to isolate where a failure was actually
-                  coming from — the interface, the routing, Supabase Auth, or the database — and
+                  coming from (the interface, the routing, Supabase Auth, or the database) and
                   iterating until each piece held up under real use. I came out of it with a genuinely
                   deeper understanding of what happens between a user clicking "Sign Up" and becoming an
                   authenticated user inside a product, not just how to design the screen they see.
@@ -326,7 +326,7 @@ const MailMint = () => {
               <p>
                 The landing page had one job: convince a first-time visitor, within seconds, that
                 MailMint could do something existing tools made difficult. The hero leads with the
-                single clearest value proposition — how fast and simple email generation can be — as
+                single clearest value proposition (how fast and simple email generation can be) as
                 the largest, most immediate thing on the page. Supporting sections below it exist to
                 answer the follow-up question a convinced-but-cautious visitor would have next: why
                 MailMint, specifically.
@@ -339,8 +339,8 @@ const MailMint = () => {
                   <p>
                     For the sign-up form, the key decision was around how password requirements were
                     communicated. Rather than letting users submit the form and then telling them what was
-                    wrong, I designed the password field to show requirements — special character, capital
-                    letter, number — inline, as they type, with the submit button staying disabled until
+                    wrong, I designed the password field to show requirements (special character, capital
+                    letter, number) inline, as they type, with the submit button staying disabled until
                     all requirements are met. That removes a moment of friction and frustration that a lot
                     of sign-up flows create: finding out you did something wrong only after you thought
                     you were done.
@@ -350,8 +350,8 @@ const MailMint = () => {
                 <p>
                   For the sign-up form, the key decision was around how password requirements were
                   communicated. Rather than letting users submit the form and then telling them what was
-                  wrong, I designed the password field to show requirements — special character, capital
-                  letter, number — inline, as they type, with the submit button staying disabled until
+                  wrong, I designed the password field to show requirements (special character, capital
+                  letter, number) inline, as they type, with the submit button staying disabled until
                   all requirements are met. That removes a moment of friction and frustration that a lot
                   of sign-up flows create: finding out you did something wrong only after you thought
                   you were done.
@@ -375,7 +375,7 @@ const MailMint = () => {
             </div>
           </section>
 
-          {/* 04 — DESIGN SYSTEM */}
+          {/* 04: DESIGN SYSTEM */}
           <section className={styles.section}>
             <SectionHeading num="04">Design system</SectionHeading>
             <p className={styles.proseLead}>
@@ -458,7 +458,7 @@ const MailMint = () => {
                     <div className={styles.emailCardMeta}>
                       <span className={styles.emailCardName}>Email 01</span>
                       <span className={styles.emailCardDivider}></span>
-                      <span className={styles.emailCardSubject}>Subject: Following up — {'{{company}}'}</span>
+                      <span className={styles.emailCardSubject}>                      Subject: Following up, {'{{company}}'}</span>
                     </div>
                     <span className={styles.emailCardTag}>Generated</span>
                   </div>
@@ -489,7 +489,7 @@ const MailMint = () => {
             </div>
           </section>
 
-          {/* 05 — CHALLENGES & TRADE-OFFS */}
+          {/* 05: CHALLENGES & TRADE-OFFS */}
           <section className={styles.section}>
             <SectionHeading num="05">Challenges &amp; trade-offs</SectionHeading>
             <div className={styles.challengeGrid}>
@@ -509,7 +509,7 @@ const MailMint = () => {
             </div>
           </section>
 
-          {/* 06 — OUTCOME */}
+          {/* 06: OUTCOME */}
           <section className={styles.section}>
             <SectionHeading num="06">Outcome</SectionHeading>
             <div className={styles.outcome}>
@@ -528,7 +528,7 @@ const MailMint = () => {
             </div>
           </section>
 
-          {/* NEXT PROJECT CTA — single instance */}
+          {/* NEXT PROJECT CTA: single instance */}
           <a href="#/" className={styles.nextCta} aria-label="Next project">
             <span className={styles.nextCtaLabel}>NEXT PROJECT</span>
             <span className={styles.nextCtaName}>

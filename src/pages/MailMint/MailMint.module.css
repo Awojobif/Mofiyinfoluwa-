@@ -1,5 +1,5 @@
 /* ============================================================
-   MailMint case study — editorial shell (CreativeFormina system)
+   MailMint case study: editorial shell (CreativeFormina system)
    ============================================================ */
 
 .page {
@@ -12,7 +12,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Reused portfolio navbar wrapper — fixed to viewport, matches the homepage navbar */
+/* Reused portfolio navbar wrapper: fixed to viewport, matches the homepage navbar */
 .header {
   position: fixed;
   top: 24px;
@@ -322,7 +322,7 @@
 }
 
 /* ============================================================
-   Design system showcase (MailMint product — preserved)
+   Design system showcase (MailMint product preserved)
    ============================================================ */
 .dsGrid {
   display: grid;

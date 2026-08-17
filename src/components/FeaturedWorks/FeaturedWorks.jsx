@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import styles from './FeaturedWorks.module.css';
-import mailmintHero from '../../assets/Mailmint hero.png';
+import mailmintHero from '../../assets/Mailmint hero.webp';
 
 const FeaturedWorks = () => {
   const scrollRef = useRef(null);
