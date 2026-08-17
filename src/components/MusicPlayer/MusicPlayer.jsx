@@ -216,17 +216,29 @@ const MusicPlayer = () => {
 
         <div className={styles.controls}>
           <button className={styles.controlBtn} onClick={prevTrack} aria-label="Previous track">
-            <span>|◁</span>
+            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+              <path d="M6 5h3v14H6zM20 5v14l-9-7z" />
+            </svg>
           </button>
           <button
             className={`${styles.controlBtn} ${styles.playBtn}`}
             onClick={togglePlay}
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
-            <span>{isPlaying ? '⏸' : '▶'}</span>
+            {isPlaying ? (
+              <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
           </button>
           <button className={styles.controlBtn} onClick={nextTrack} aria-label="Next track">
-            <span>▷|</span>
+            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+              <path d="M15 5h3v14h-3zM4 5v14l9-7z" />
+            </svg>
           </button>
         </div>
 
