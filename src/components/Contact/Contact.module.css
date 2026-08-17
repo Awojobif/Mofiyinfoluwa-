@@ -1,0 +1,157 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-purple);
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-purple);
+}
+
+.contactCard {
+  background-color: #111111;
+  border-radius: var(--border-radius-xl);
+  padding: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: 48px;
+  color: white;
+}
+
+.infoArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.heading {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.subheading {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.inputGroup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.input,
+.textarea {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  width: 100%;
+  min-width: 0;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  width: 100%;
+}
+
+.messageGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.submitBtn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  max-width: calc(100% - 32px);
+  background: white;
+  color: #111;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.submitBtn:hover {
+  opacity: 0.8;
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.statusMsg {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #cfcfcf;
+}
+
+.statusSuccess {
+  color: #7ee0a6;
+}
+
+.statusError {
+  color: #ff9b9b;
+}
+
+@media (max-width: 900px) {
+  .contactCard {
+    grid-template-columns: 1fr;
+    padding: 32px;
+  }
+}
+
+@media (max-width: 500px) {
+  .inputGroup {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,276 @@
+.scrollSection {
+  width: 100%;
+}
+
+.stickyWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-purple);
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-purple);
+}
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.projectCardContainer {
+  width: 100%;
+}
+
+.projectCard {
+  border-radius: var(--border-radius-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  min-height: 400px;
+  position: relative;
+}
+
+/* MailMint gets a 40/60 split so the right visual has more room */
+.mailmintCard {
+  grid-template-columns: 40% 60%;
+}
+
+.mailmintBg {
+  background: #FCF4FF;
+}
+
+.dripBg {
+  background: #111111;
+  color: white;
+}
+
+.projectContent {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.darkText {
+  color: white;
+}
+
+.projectNumber {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-purple);
+  margin-bottom: 12px;
+}
+
+.blueColor {
+  color: #5C67FA;
+}
+
+.projectTitle {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.projectDesc {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin-bottom: 32px;
+  max-width: 90%;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  background: white;
+  padding: 12px 24px;
+  border-radius: var(--border-radius-xl);
+  width: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.arrow {
+  font-size: 14px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cta:hover .arrow {
+    transform: translate(3px, -3px);
+  }
+}
+
+
+
+.cta:hover {
+  background: #f0f0f0;
+}
+
+/* The right visual column is a positioned context for the image */
+.projectVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageMockup {
+  width: 80%;
+  height: 80%;
+  background: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.imageMockupDark {
+  width: 50%;
+  height: 90%;
+  background: #2a2a2a;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* MailMint hero is centered in the right column */
+.mailmintHeroImg {
+  width: 95%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 901px) {
+  .scrollSection {
+    height: 250vh;
+    /* Smooth, extended scroll area */
+  }
+
+  .stickyWrapper {
+    position: sticky;
+    top: 15vh;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .projects {
+      position: relative;
+    }
+
+    .card1 {
+      opacity: var(--op1, 1);
+      transform: translateY(var(--y1, 0)) scale(var(--s1, 1));
+      will-change: transform, opacity;
+      transform-origin: center bottom;
+    }
+
+    .card2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      opacity: var(--op2, 0);
+      transform: translateY(var(--y2, 40px));
+      pointer-events: var(--pe2, none);
+      will-change: transform, opacity;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .projectCard,
+  .mailmintCard {
+    grid-template-columns: 1fr;
+  }
+
+  .projectContent {
+    padding: 32px;
+  }
+
+  .projectVisual {
+    min-height: 250px;
+  }
+
+  .mailmintHeroImg {
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+/* ---------- Tablet / intermediate: balanced MailMint composition ----------
+   Targets the range where the desktop two-column layout starts becoming
+   cramped. Keeps a horizontal composition but gives the text column more
+   width, trims excess height, and keeps the CTA on one line where possible. */
+@media (min-width: 901px) and (max-width: 1199px) {
+  .mailmintCard {
+    grid-template-columns: 45% 55%;
+    min-height: 360px;
+  }
+
+  .mailmintCard .projectContent {
+    padding: 36px;
+  }
+
+  .mailmintCard .projectDesc {
+    max-width: 100%;
+  }
+
+  .mailmintCard .cta {
+    max-width: 100%;
+  }
+
+  .mailmintCard .mailmintHeroImg {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollSection {
+    height: auto;
+  }
+
+  .stickyWrapper {
+    position: static;
+  }
+
+  .projects {
+    position: static;
+  }
+
+  .card1,
+  .card2 {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}

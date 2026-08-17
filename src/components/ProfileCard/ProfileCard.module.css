@@ -1,0 +1,213 @@
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-xl);
+  padding: 24px 32px;
+  /* Reduced vertical padding */
+  box-shadow: var(--shadow-subtle);
+  background: #2a2a2a;
+  color: white;
+}
+
+.topSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  /* Reduced gap */
+}
+
+.imagePlaceholder {
+  width: 64px;
+  /* Slightly smaller image */
+  height: 64px;
+  border-radius: 50%;
+  background-color: #444;
+  flex-shrink: 0;
+  object-fit: cover;
+  display: block;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-size: 15px;
+  /* Slightly smaller */
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.title {
+  font-size: 12px;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-purple);
+  border-radius: 50%;
+  position: relative;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .statusDot {
+    animation: statusPulse 3s infinite ease-in-out;
+  }
+}
+
+@keyframes statusPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+    box-shadow: 0 0 0 rgba(124, 92, 250, 0);
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+    box-shadow: 0 0 6px rgba(124, 92, 250, 0.5);
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+    box-shadow: 0 0 0 rgba(124, 92, 250, 0);
+  }
+}
+
+.statusText {
+  font-size: 11px;
+  color: #cccccc;
+}
+
+.divider {
+  border: none;
+  height: 1px;
+  background-color: #333333;
+  margin: 16px 0 24px 0;
+  /* Increased bottom margin here to increase gap */
+}
+
+.bottomSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* Allows wrapping on narrower cards */
+  gap: 24px;
+  /* Adds obvious vertical/horizontal spacing */
+  margin-top: 16px;
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.icon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.resumeBtn {
+  background-color: white;
+  color: #111;
+  padding: 10px 20px;
+  border-radius: var(--border-radius-xl);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.resumeBtn:hover {
+  opacity: 0.8;
+  background-color: #f7f7f7;
+}
+
+.arrow {
+  font-size: 14px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .resumeBtn:hover .arrow {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* ---------- Stacked-mode expandable "Currently Listening To" ---------- */
+.seeMoreRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.seeMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-purple);
+  cursor: pointer;
+}
+
+.seeMore:hover {
+  text-decoration: underline;
+}
+
+.expandRegion {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease;
+}
+
+.expandOpen {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+.expandInner {
+  overflow: hidden;
+  min-height: 0;
+  padding-top: 16px;
+}
