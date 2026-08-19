@@ -5,7 +5,7 @@ const TRACKS = [
   {
     title: 'Spring Rain',
     artist: 'Oscar Dunbar',
-    spotifyUrl: 'https://open.spotify.com/track/5vFcUNUxOZKaHU1H0wDFoo',
+    youtubeId: 'pmU4963Trdc',
     artwork: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ecd8ab18c5ee31cf62fb0442',
     album: '',
     duration: 260,
@@ -13,7 +13,7 @@ const TRACKS = [
   {
     title: 'No Direction',
     artist: 'Rachael Yamagata',
-    spotifyUrl: 'https://open.spotify.com/track/7njTGO45SkaBTNu35t2Yq0',
+    youtubeId: 'to90Ku_xK8s',
     artwork: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0215c8ed0db57fb7aa6f78d724',
     album: '',
     duration: 234,
@@ -21,7 +21,7 @@ const TRACKS = [
   {
     title: 'Dealbreaker',
     artist: 'Rachael Yamagata',
-    spotifyUrl: 'https://open.spotify.com/track/2dyZe2rAzWVqVcRaS1QPXL',
+    youtubeId: 'Th2QRlrP8RM',
     artwork: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02e4ecb52799c9155e5ed61b55',
     album: '',
     duration: 347,
@@ -29,7 +29,7 @@ const TRACKS = [
   {
     title: 'Best Friend',
     artist: 'Rex Orange County',
-    spotifyUrl: 'https://open.spotify.com/track/3rPtS4nfpy7PsARctAWpzd',
+    youtubeId: 'OqBuXQLR4Y8',
     artwork: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ff874602e13e9181c26e5f01',
     album: '',
     duration: 262,
@@ -37,7 +37,7 @@ const TRACKS = [
   {
     title: 'Nuts',
     artist: 'RM',
-    spotifyUrl: 'https://open.spotify.com/track/2sR1e5YFAvXVN6EiIwR2is',
+    youtubeId: 'QFsGPm87WnM',
     artwork: 'https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027093cd0ee6043740f73e54d9',
     album: '',
     duration: 195,
@@ -45,12 +45,6 @@ const TRACKS = [
 ];
 
 const PLAYLIST_URL = 'https://open.spotify.com/playlist/6FaDfcyJMbXzLqcJrpzp9P';
-
-const getTrackId = (url) => url.split('/track/')[1];
-const embedUrl = (id) => `https://open.spotify.com/embed/track/${id}`;
-
-// Spotify reports position/duration in milliseconds; guard against seconds.
-const toSeconds = (value) => (value > 1000 ? value / 1000 : value);
 
 const formatTime = (seconds) => {
   if (!seconds || !isFinite(seconds) || seconds < 0) return '0:00';
@@ -61,12 +55,15 @@ const formatTime = (seconds) => {
 };
 
 const MusicPlayer = () => {
-  const iframeRef = useRef(null);
-  const readyRef = useRef(false);
-  const pendingToggleRef = useRef(false);
-  // Anchor for smooth interpolation: last real position reported by Spotify
-  // (or a seek) + the wall-clock time it was observed.
-  const lastSyncRef = useRef({ position: 0, time: 0 });
+  const playerRef = useRef(null);
+  const playerContainerRef = useRef(null);
+  const apiReadyRef = useRef(false);
+  const playerReadyRef = useRef(false);
+  const pendingPlayRef = useRef(false);
+  const currentIndexRef = useRef(0);
+  const rafRef = useRef(null);
+  const isDraggingRef = useRef(false);
+  const durationRef = useRef(TRACKS[0].duration || 0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -77,99 +74,201 @@ const MusicPlayer = () => {
   const safeDuration = duration > 0 ? duration : 1;
   const progressPercent = duration > 0 ? Math.min((position / duration) * 100, 100) : 0;
 
-  // Real Spotify embed messages drive state. The audio (embed) is the source
-  // of truth; we only interpolate between its real reports for smooth visuals.
+  const updatePosition = () => {
+    const player = playerRef.current;
+    if (!player || typeof player.getCurrentTime !== 'function') return;
+
+    if (!isDraggingRef.current) {
+      const currentTime = player.getCurrentTime();
+      const playerDuration = player.getDuration();
+      const nextDuration = Number.isFinite(playerDuration) && playerDuration > 0
+        ? playerDuration
+        : durationRef.current;
+
+      if (nextDuration > 0 && nextDuration !== durationRef.current) {
+        durationRef.current = nextDuration;
+        setDuration(nextDuration);
+      }
+
+      if (Number.isFinite(currentTime)) {
+        setPosition(Math.max(0, Math.min(currentTime, nextDuration || currentTime)));
+      }
+    }
+
+    rafRef.current = requestAnimationFrame(updatePosition);
+  };
+
+  const startPositionSync = () => {
+    if (rafRef.current === null) {
+      rafRef.current = requestAnimationFrame(updatePosition);
+    }
+  };
+
+  const stopPositionSync = () => {
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  };
+
   useEffect(() => {
-    const onMessage = (e) => {
-      const iframe = iframeRef.current;
-      if (!iframe || e.source !== iframe.contentWindow) return;
-      const data = e.data;
-      if (!data || typeof data !== 'object') return;
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
 
-      const type = data.type || (data.payload && data.payload.type);
-      if (type === 'ready') {
-        readyRef.current = true;
-        if (pendingToggleRef.current) {
-          pendingToggleRef.current = false;
-          iframe.contentWindow.postMessage({ command: 'toggle' }, '*');
-          setIsPlaying(true);
-        }
-      } else if (type === 'play') {
-        setIsPlaying(true);
-      } else if (type === 'pause') {
-        setIsPlaying(false);
+  useEffect(() => {
+    const loadYouTubeAPI = () => {
+      if (window.YT?.Player) {
+        apiReadyRef.current = true;
+        createPlayer();
+        return;
       }
 
-      const payload = data.payload || {};
-      if (typeof payload.position === 'number') {
-        const posSec = toSeconds(payload.position);
-        setPosition(posSec);
-        lastSyncRef.current = { position: posSec, time: performance.now() };
-      }
-      if (typeof payload.duration === 'number' && payload.duration > 0) {
-        setDuration(toSeconds(payload.duration));
+      const existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+      const previousReady = window.onYouTubeIframeAPIReady;
+
+      window.onYouTubeIframeAPIReady = () => {
+        previousReady?.();
+        apiReadyRef.current = true;
+        createPlayer();
+      };
+
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        document.body.appendChild(script);
       }
     };
-    window.addEventListener('message', onMessage);
-    return () => window.removeEventListener('message', onMessage);
+
+    const createPlayer = () => {
+      if (!apiReadyRef.current || playerRef.current || !playerContainerRef.current || !window.YT?.Player) return;
+
+      playerRef.current = new window.YT.Player(playerContainerRef.current, {
+        width: '200',
+        height: '113',
+        videoId: TRACKS[currentIndexRef.current].youtubeId,
+        playerVars: {
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          playsinline: 1,
+          rel: 0,
+          modestbranding: 1,
+          iv_load_policy: 3,
+          origin: window.location.origin,
+        },
+        events: {
+          onReady: (event) => {
+            playerReadyRef.current = true;
+            const playerDuration = event.target.getDuration();
+            if (Number.isFinite(playerDuration) && playerDuration > 0) {
+              durationRef.current = playerDuration;
+              setDuration(playerDuration);
+            }
+
+            if (pendingPlayRef.current) {
+              pendingPlayRef.current = false;
+              event.target.seekTo(0, true);
+              event.target.playVideo();
+            }
+          },
+          onStateChange: (event) => {
+            if (event.data === window.YT.PlayerState.PLAYING) {
+              setIsPlaying(true);
+              startPositionSync();
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
+              setIsPlaying(false);
+              updatePosition();
+              stopPositionSync();
+            } else if (event.data === window.YT.PlayerState.ENDED) {
+              setIsPlaying(false);
+              const playerDuration = event.target.getDuration();
+              const finalDuration = Number.isFinite(playerDuration) && playerDuration > 0
+                ? playerDuration
+                : durationRef.current;
+              setPosition(finalDuration);
+              stopPositionSync();
+            }
+          },
+        },
+      });
+    };
+
+    loadYouTubeAPI();
+
+    return () => {
+      stopPositionSync();
+      if (playerRef.current?.destroy) {
+        playerRef.current.destroy();
+      }
+      playerRef.current = null;
+      playerReadyRef.current = false;
+    };
   }, []);
 
-  // Re-anchor the interpolation clock whenever playback (re)starts so the
-  // progress bar continues from the real current position.
-  useEffect(() => {
-    if (isPlaying) {
-      lastSyncRef.current = { position, time: performance.now() };
-    }
-  }, [isPlaying]);
-
-  // Smooth progress between Spotify's real reports. Every real message or seek
-  // re-anchors lastSyncRef, so the audio always remains the source of truth.
-  useEffect(() => {
-    if (!isPlaying) return;
-    const id = setInterval(() => {
-      const base = lastSyncRef.current;
-      const delta = (performance.now() - base.time) / 1000;
-      setPosition(base.position + delta);
-    }, 200);
-    return () => clearInterval(id);
-  }, [isPlaying]);
-
   const togglePlay = () => {
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-    if (!readyRef.current) {
-      pendingToggleRef.current = !pendingToggleRef.current;
+    const player = playerRef.current;
+    if (!player || !playerReadyRef.current) {
+      pendingPlayRef.current = true;
       return;
     }
-    iframe.contentWindow.postMessage({ command: 'toggle' }, '*');
-    setIsPlaying((prev) => !prev);
+
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
   };
 
   const changeTrack = (index) => {
     if (index === currentIndex) return;
+
+    const nextTrack = TRACKS[index];
     setCurrentIndex(index);
     setPosition(0);
-    lastSyncRef.current = { position: 0, time: performance.now() };
-    setDuration(TRACKS[index].duration || 0);
-    readyRef.current = false;
-    pendingToggleRef.current = true; // auto-play the new track once it's ready
+    durationRef.current = nextTrack.duration || 0;
+    setDuration(nextTrack.duration || 0);
+    isDraggingRef.current = false;
+
+    const player = playerRef.current;
+    if (!player || !playerReadyRef.current) {
+      pendingPlayRef.current = true;
+      return;
+    }
+
+    player.loadVideoById({
+      videoId: nextTrack.youtubeId,
+      startSeconds: 0,
+    });
   };
 
   const nextTrack = () => changeTrack((currentIndex + 1) % TRACKS.length);
   const prevTrack = () => changeTrack((currentIndex - 1 + TRACKS.length) % TRACKS.length);
 
   const handleSeek = (e) => {
-    const iframe = iframeRef.current;
+    const player = playerRef.current;
     const value = Number(e.target.value);
-    setPosition(value); // immediate visual feedback
-    lastSyncRef.current = { position: value, time: performance.now() };
-    if (iframe && readyRef.current) {
-      // Real audio seek — the embed jumps to this position and reports back.
-      // Send both position/timestamp keys to cover the embed's expected format.
-      iframe.contentWindow.postMessage(
-        { command: 'seek', position: value, timestamp: value },
-        '*'
-      );
+    setPosition(value);
+
+    if (player && playerReadyRef.current) {
+      // During dragging, don't ask YouTube to seek ahead/buffer on every movement.
+      player.seekTo(value, isDraggingRef.current ? false : true);
+    }
+  };
+
+  const handleSeekStart = () => {
+    isDraggingRef.current = true;
+  };
+
+  const handleSeekEnd = (e) => {
+    const player = playerRef.current;
+    const value = Number(e.currentTarget.value);
+    isDraggingRef.current = false;
+    setPosition(value);
+
+    if (player && playerReadyRef.current) {
+      // On release, allow YouTube to seek ahead to the requested position.
+      player.seekTo(value, true);
     }
   };
 
@@ -180,11 +279,11 @@ const MusicPlayer = () => {
       <div className={styles.playerCard}>
         <div className={styles.trackInfo}>
           <a
-            href={track.spotifyUrl}
+            href={`https://music.youtube.com/watch?v=${track.youtubeId}`}
             target="_blank"
             rel="noreferrer"
             className={styles.artLink}
-            aria-label={`Open ${track.title} by ${track.artist} on Spotify`}
+            aria-label={`Open ${track.title} by ${track.artist} on YouTube Music`}
           >
             {track.artwork ? (
               <img src={track.artwork} alt="" className={styles.albumArt} />
@@ -209,6 +308,10 @@ const MusicPlayer = () => {
             value={Math.min(position, safeDuration)}
             style={{ '--progress': `${progressPercent}%` }}
             onChange={handleSeek}
+            onPointerDown={handleSeekStart}
+            onPointerUp={handleSeekEnd}
+            onTouchStart={handleSeekStart}
+            onTouchEnd={handleSeekEnd}
             aria-label="Seek through current track"
           />
           <span className={styles.time}>{formatTime(duration)}</span>
@@ -247,30 +350,21 @@ const MusicPlayer = () => {
         </div>
       </div>
 
-      {/* Hidden Spotify embed — the actual audio source, controlled by the custom
-          buttons/progress above via postMessage. Off-screen (not display:none) so
-          audio can still play. The key forces a reload when the track changes. */}
+      {/* YouTube player canvas. It is kept in the DOM and off-canvas rather than
+          display:none so mobile browsers can continue playback reliably. */}
       <div
         aria-hidden="true"
         style={{
           position: 'fixed',
           left: '-9999px',
           top: '0',
-          width: '300px',
-          height: '152px',
+          width: '200px',
+          height: '113px',
+          opacity: 0,
           pointerEvents: 'none',
         }}
       >
-        <iframe
-          key={track.spotifyUrl}
-          ref={iframeRef}
-          src={embedUrl(getTrackId(track.spotifyUrl))}
-          width="300"
-          height="152"
-          style={{ border: 'none' }}
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          title="Spotify player"
-        />
+        <div ref={playerContainerRef} />
       </div>
     </div>
   );
