@@ -50,7 +50,6 @@
   position: relative;
 }
 
-/* MailMint gets a 40/60 split so the right visual has more room */
 .mailmintCard {
   grid-template-columns: 40% 60%;
 }
@@ -128,13 +127,10 @@
   }
 }
 
-
-
 .cta:hover {
   background: #f0f0f0;
 }
 
-/* The right visual column is a positioned context for the image */
 .projectVisual {
   display: flex;
   align-items: center;
@@ -159,7 +155,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* MailMint hero is centered in the right column */
 .mailmintHeroImg {
   width: 95%;
   height: auto;
@@ -170,10 +165,60 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
+.dripComingSoon,
+.dripMobileBadge {
+  display: none;
+}
+
+.dripComingSoon {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 17, 17, 0.78);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.dripComingSoonText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.dripComingSoonTitle {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dripComingSoonSubtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+}
+
+.dripCard:hover .dripComingSoon {
+  opacity: 1;
+}
+
+.dripCard:hover .projectContent,
+.dripCard:hover .projectVisual {
+  opacity: 0.12;
+  transition: opacity 0.25s ease;
+}
+
+.dripCard .projectContent,
+.dripCard .projectVisual {
+  transition: opacity 0.25s ease;
+}
+
 @media (min-width: 901px) {
   .scrollSection {
     height: 250vh;
-    /* Smooth, extended scroll area */
   }
 
   .stickyWrapper {
@@ -204,6 +249,10 @@
       will-change: transform, opacity;
     }
   }
+
+  .dripComingSoon {
+    display: flex;
+  }
 }
 
 @media (max-width: 900px) {
@@ -224,12 +273,24 @@
     width: 100%;
     border-radius: 12px;
   }
+
+  .dripMobileBadge {
+    display: inline-flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 3;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
 }
 
-/* ---------- Tablet / intermediate: balanced MailMint composition ----------
-   Targets the range where the desktop two-column layout starts becoming
-   cramped. Keeps a horizontal composition but gives the text column more
-   width, trims excess height, and keeps the CTA on one line where possible. */
 @media (min-width: 901px) and (max-width: 1199px) {
   .mailmintCard {
     grid-template-columns: 45% 55%;
@@ -272,5 +333,13 @@
     opacity: 1;
     transform: none;
     pointer-events: auto;
+  }
+
+  .dripComingSoon {
+    display: none;
+  }
+
+  .dripMobileBadge {
+    display: inline-flex;
   }
 }

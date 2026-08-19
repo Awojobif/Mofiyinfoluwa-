@@ -18,7 +18,6 @@ const FeaturedWorks = () => {
         let p = maxScroll > 0 ? -rect.top / maxScroll : 0;
         p = Math.max(0, Math.min(1, p));
 
-        // Spread the transition over a much wider scroll threshold for smooth fluid easing
         const p1 = Math.min(1, Math.max(0, p / 0.7));
         const p2 = Math.min(1, Math.max(0, (p - 0.3) / 0.7));
 
@@ -79,18 +78,25 @@ const FeaturedWorks = () => {
 
           {/* Project 02 */}
           <div className={`${styles.projectCardContainer} ${styles.card2}`}>
-            <div className={`${styles.projectCard} ${styles.dripBg}`}>
+            <div className={`${styles.projectCard} ${styles.dripBg} ${styles.dripCard}`}>
               <div className={`${styles.projectContent} ${styles.darkText}`}>
                 <div className={`${styles.projectNumber} ${styles.blueColor}`}>02</div>
                 <h3 className={styles.projectTitle}>Drip</h3>
                 <p className={styles.projectDesc}>
                   An AI-powered personal style assistant providing curated wardrobe analytics, onboarding flows, and bespoke styling choices.
                 </p>
-                <a href="#" className={styles.cta}>View case study <span className={styles.arrow}>↗</span></a>
+                <span className={styles.cta} aria-disabled="true">View case study <span className={styles.arrow}>↗</span></span>
               </div>
               <div className={styles.projectVisual}>
                 <div className={styles.imageMockupDark}></div>
               </div>
+              <div className={styles.dripComingSoon}>
+                <div className={styles.dripComingSoonText}>
+                  <span className={styles.dripComingSoonTitle}>Coming soon</span>
+                  <span className={styles.dripComingSoonSubtitle}>Case study in progress</span>
+                </div>
+              </div>
+              <span className={styles.dripMobileBadge}>Coming soon</span>
             </div>
           </div>
         </div>
