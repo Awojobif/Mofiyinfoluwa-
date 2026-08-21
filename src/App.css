@@ -182,3 +182,20 @@
     border-right-color: var(--border);
   }
 }
+
+/* MailMint case-study hero: intentionally breaks out of the text container on desktop. */
+img[alt="MailMint running on a laptop"] {
+  width: calc(100% + 160px);
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  margin-left: -80px;
+}
+
+@media (max-width: 900px) {
+  img[alt="MailMint running on a laptop"] {
+    width: 100%;
+    margin-left: 0;
+    height: auto;
+  }
+}
