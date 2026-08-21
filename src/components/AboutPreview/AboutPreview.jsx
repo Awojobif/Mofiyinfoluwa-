@@ -20,17 +20,16 @@ const AboutPreview = () => {
 
         <div className={styles.story}>
           <p>
-            I didn&apos;t start in tech; I started by serving people.<br />
-            My journey began in customer service, where I learned how to listen, understand needs, and solve real human problems. That experience shaped how I think about products today, not just as interfaces, but as tools that genuinely help people.
+            I&apos;m a product designer who moved into tech from an unlikely place, banking. I spent about a year working directly with customers as an intern, first in customer support, then in card operations, which is where I actually learned to pay attention to how people get confused, what makes them hesitate, and what they need to hear to trust something new. I didn&apos;t know it at the time, but that was my first real design education.
           </p>
           <p>
-            That curiosity led me into UX design, where I began translating user needs into digital experiences. As I grew, I moved beyond just designing screens into thinking about how products actually work, scale, and get built.
+            I studied Mass Communication at university, then found my way into product design through a bootcamp that turned into something bigger. I led design for MailMint, an AI cold email platform, within a 16-person team, structuring the product through research and documentation, shaping the UX for onboarding and authentication, and working closely with AI tools throughout the build. It taught me that design decisions happen long before anything reaches a screen.
           </p>
           <p>
-            Today, I work as a Product Engineer. Bridging design and development to bring ideas to life. I combine product thinking, frontend systems, and AI-assisted workflows to design and ship products that are not only functional, but intentional and scalable.
+            Right now I&apos;m building Drip, a smart wardrobe app, designed the more traditional way, in Figma, screen by screen, before a single line of code. Between the two projects, I&apos;ve gotten to work across the full range of how design actually gets made today, from documentation-driven, AI-assisted builds to hands-on visual design.
           </p>
           <p>
-            For me, it&apos;s still the same foundation: understanding people, solving problems, and building things that make sense.
+            What ties it together for me is the same thing that stuck from my banking days: paying close attention to what confuses people, and designing that confusion away.
           </p>
           <p className={styles.certification}>
             Certified in Product Design &amp; Development
