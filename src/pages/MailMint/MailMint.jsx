@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './MailMint.module.css';
 import Navbar from '../../components/Navbar/Navbar';
-import mailmintHero from '../../assets/mockup.webp';
+import mailmintHero from '../../assets/Mockup image.png';
 import dashboard from '../../assets/mailmint-dashboard.webp';
 import generationImg from '../../assets/mailmint-generation.webp';
 import loginImg from '../../assets/mailmint-login.webp';

@@ -85,7 +85,7 @@ const FeaturedWorks = () => {
                 <p className={styles.projectDesc}>
                   An AI-powered personal style assistant providing curated wardrobe analytics, onboarding flows, and bespoke styling choices.
                 </p>
-                <span className={styles.cta} aria-disabled="true">View case study <span className={styles.arrow}>↗</span></span>
+                <span className={styles.cta} aria-disabled="true">Coming soon</span>
               </div>
               <div className={styles.projectVisual}>
                 <div className={styles.imageMockupDark}></div>

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styles from './Home.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
@@ -9,27 +8,7 @@ import AboutPreview from '../../components/AboutPreview/AboutPreview';
 import Contact from '../../components/Contact/Contact';
 import Footer from '../../components/Footer/Footer';
 
-const STACKED_QUERY = '(max-width: 992px)';
-
-function useMediaQuery(query) {
-  const [matches, setMatches] = useState(() =>
-    typeof window !== 'undefined' ? window.matchMedia(query).matches : false
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia(query);
-    const onChange = (e) => setMatches(e.matches);
-    setMatches(mql.matches);
-    mql.addEventListener('change', onChange);
-    return () => mql.removeEventListener('change', onChange);
-  }, [query]);
-
-  return matches;
-}
-
 const Home = () => {
-  const isStacked = useMediaQuery(STACKED_QUERY);
-
   return (
     <div className={styles.homeLayout}>
       <header className={styles.header}>
@@ -38,8 +17,7 @@ const Home = () => {
 
       <main className={styles.mainContainer}>
         <aside className={styles.leftColumn}>
-          <ProfileCard musicPlayer={isStacked ? <MusicPlayer /> : null} />
-          {!isStacked && <MusicPlayer />}
+          <ProfileCard musicPlayer={<MusicPlayer />} />
         </aside>
 
         <section className={styles.rightColumn}>

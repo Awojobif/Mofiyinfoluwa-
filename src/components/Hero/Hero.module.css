@@ -22,29 +22,31 @@
 }
 
 .heading {
-  font-size: 64px;
+  font-size: clamp(27px, 5.54vw - 28px, 44px);
   line-height: 1.1;
   font-weight: 600;
   color: var(--color-text);
   letter-spacing: -1.5px;
   margin: 0 auto;
+  max-width: 620px;
+  text-wrap: pretty;
 }
 
 .subtext {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--color-muted);
   line-height: 1.7;
-  max-width: 720px;
+  max-width: 680px;
   margin: 44px auto 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
   .content {
     max-width: 100%;
   }
 
   .heading {
-    font-size: 46px;
+    font-size: clamp(30px, 4vw + 4.3px, 44px);
   }
 }
 
@@ -59,12 +61,8 @@
     margin-bottom: 18px;
   }
 
-  .heading {
-    font-size: 34px;
-  }
-
   .subtext {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.6;
     margin-top: 32px;
   }
