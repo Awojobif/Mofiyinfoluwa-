@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from './MailMint.module.css';
 import Navbar from '../../components/Navbar/Navbar';
+import Lightbox from '../../components/Lightbox/Lightbox';
 import mailmintHero from '../../assets/Mockup image.png';
-import dashboard from '../../assets/mailmint-dashboard.webp';
 import generationImg from '../../assets/mailmint-generation.webp';
 import loginImg from '../../assets/mailmint-login.webp';
 import libraryImg from '../../assets/mailmint-library.webp';
@@ -136,8 +136,8 @@ const COLOR_TOKENS = [
 
 const GALLERY = [
   { img: libraryImg, label: 'Library' },
-  { img: draftsImg, label: 'Drafts' },
-  { img: dashboard, label: 'Dashboard' },
+  { img: draftsImg, label: 'Draft' },
+  { img: generationImg, label: 'Dashboard' },
 ];
 
 const SectionHeading = ({ num, children }) => (
@@ -171,13 +171,14 @@ const Collapsible = ({ preview, children }) => {
         aria-expanded={open}
       >
         {open ? 'Read less' : 'Read more'}
-        <Icon.ArrowRight className={styles.readToggleIcon} aria-hidden="true" />
       </button>
     </>
   );
 };
 
 const MailMint = () => {
+  const [lightbox, setLightbox] = useState(null);
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -205,7 +206,14 @@ const MailMint = () => {
                 {label}
               </span>
             ))}
-            <span className={styles.statusPill}>Live MVP · In active development</span>
+            <a
+              href="https://mailmintAI.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.liveMvpCta}
+            >
+              View Live MVP <span className={styles.ctaArrow} aria-hidden="true">↗</span>
+            </a>
           </div>
 
           {/* 01: THE PROBLEM */}
@@ -368,7 +376,21 @@ const MailMint = () => {
             <div className={styles.gallery}>
               {GALLERY.map((s) => (
                 <figure key={s.label} className={styles.galleryItem}>
-                  <img src={s.img} alt={s.label} className={styles.galleryImg} loading="lazy" />
+                  <img
+                    src={s.img}
+                    alt={s.label}
+                    className={styles.galleryImg}
+                    loading="lazy"
+                    onClick={() => setLightbox({ src: s.img, alt: s.label })}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setLightbox({ src: s.img, alt: s.label });
+                      }
+                    }}
+                  />
                   <figcaption className={styles.galleryLabel}>{s.label}</figcaption>
                 </figure>
               ))}
@@ -409,7 +431,7 @@ const MailMint = () => {
                 </div>
               </div>
 
-              <div className={`${styles.dsCard} ${styles.dsSpanFull}`}>
+              <div className={`${styles.dsCard} ${styles.dsSpan8}`}>
                 <span className={styles.dsLabel}>Color Tokens</span>
                 <div className={styles.colorRow}>
                   {COLOR_TOKENS.map((c) => (
@@ -441,41 +463,7 @@ const MailMint = () => {
                 </div>
               </div>
 
-              <div className={styles.dsCard}>
-                <span className={styles.dsLabel}>Status Badges</span>
-                <div className={styles.chipShowcase}>
-                  <span className={styles.badgeGenerated}>Generated</span>
-                  <span className={styles.badgeSaved}>Saved</span>
-                  <span className={styles.badgeDraft}>Draft</span>
-                  <span className={styles.badgeWeak}>Weak Input</span>
-                </div>
-              </div>
-
-              <div className={`${styles.dsCard} ${styles.dsSpanWide}`}>
-                <span className={styles.dsLabel}>Generated Email Card</span>
-                <div className={styles.emailCard}>
-                  <div className={styles.emailCardHead}>
-                    <div className={styles.emailCardMeta}>
-                      <span className={styles.emailCardName}>Email 01</span>
-                      <span className={styles.emailCardDivider}></span>
-                      <span className={styles.emailCardSubject}>                      Subject: Following up, {'{{company}}'}</span>
-                    </div>
-                    <span className={styles.emailCardTag}>Generated</span>
-                  </div>
-                  <div className={styles.emailCardBody}>
-                    <p>Hi {'{{first_name}}'},</p>
-                    <p>I came across {'{{company}}'} and wanted to reach out regarding…</p>
-                    <p>Looking forward to connecting.</p>
-                  </div>
-                  <div className={styles.emailCardFoot}>
-                    <button className={styles.emailCardAction}>Rewrite</button>
-                    <span className={styles.emailCardDivider}></span>
-                    <button className={styles.emailCardActionMuted}>Copy</button>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`${styles.dsCard} ${styles.dsSpanWide}`}>
+              <div className={`${styles.dsCard} ${styles.dsSpan8}`}>
                 <span className={styles.dsLabel}>Input Fields</span>
                 <div className={styles.inputShowcase}>
                   <label className={styles.inputLabel}>Email Address</label>
@@ -543,6 +531,14 @@ const MailMint = () => {
           <Icon.ArrowLeft /> Back to portfolio
         </a>
       </footer>
+
+      {lightbox && (
+        <Lightbox
+          src={lightbox.src}
+          alt={lightbox.alt}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </div>
   );
 };

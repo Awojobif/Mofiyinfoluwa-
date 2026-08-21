@@ -119,6 +119,37 @@
   color: var(--color-purple);
 }
 
+.liveMvpCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background-color: var(--color-purple);
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.liveMvpCta:hover {
+  opacity: 0.88;
+  text-decoration: none;
+}
+
+.liveMvpCta:active {
+  transform: scale(0.97);
+}
+
+.ctaArrow {
+  font-size: 14px;
+  display: inline-block;
+  line-height: 1;
+}
+
 /* ---------- Numbered sections ---------- */
 .section {
   border-top: 1px solid var(--color-border);
@@ -185,11 +216,6 @@
 
 .readToggle:hover {
   text-decoration: underline;
-}
-
-.readToggleIcon {
-  width: 1em;
-  height: 1em;
 }
 
 .proseLead {
@@ -315,6 +341,12 @@
   border-radius: 14px;
   border: 1px solid var(--color-border);
   display: block;
+  cursor: zoom-in;
+  transition: filter 0.2s ease;
+}
+
+.galleryImg:hover {
+  filter: brightness(0.94);
 }
 
 .galleryLabel {
@@ -347,6 +379,10 @@
 
 .dsSpanWide {
   grid-column: span 6;
+}
+
+.dsSpan8 {
+  grid-column: span 8;
 }
 
 .dsLabel {
@@ -417,8 +453,8 @@
 
 /* Color tokens */
 .colorRow {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
@@ -426,7 +462,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: 110px;
+  width: auto;
 }
 
 .colorSwatch {
@@ -846,7 +882,8 @@
 
   .dsCard,
   .dsSpanFull,
-  .dsSpanWide {
+  .dsSpanWide,
+  .dsSpan8 {
     grid-column: auto;
   }
 
