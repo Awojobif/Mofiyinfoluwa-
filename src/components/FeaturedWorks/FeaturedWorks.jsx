@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import styles from './FeaturedWorks.module.css';
 import mailmintHero from '../../assets/Mailmint hero.webp';
+import poiseMockup from '../../assets/poise-phone-clean.png';
 
 const FeaturedWorks = () => {
   const scrollRef = useRef(null);
@@ -11,6 +12,18 @@ const FeaturedWorks = () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
+    // Timeline: HOLD → TRANSITION → HOLD, as a fraction of the pinned scroll
+    // range. MailMint stays fully settled (opacity pinned at exactly 1),
+    // eases out as Poise eases in, then Poise stays fully settled for the
+    // rest of the scroll.
+    const TRANSITION_START = 0.45;
+    const TRANSITION_END = 0.54;
+
+    const smoothstep = (edge0, edge1, x) => {
+      const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
+      return t * t * (3 - 2 * t);
+    };
+
     const compute = () => {
       if (scrollRef.current) {
         const rect = scrollRef.current.getBoundingClientRect();
@@ -18,16 +31,15 @@ const FeaturedWorks = () => {
         let p = maxScroll > 0 ? -rect.top / maxScroll : 0;
         p = Math.max(0, Math.min(1, p));
 
-        const p1 = Math.min(1, Math.max(0, p / 0.7));
-        const p2 = Math.min(1, Math.max(0, (p - 0.3) / 0.7));
+        const t1 = smoothstep(TRANSITION_START, TRANSITION_END, p);
 
-        scrollRef.current.style.setProperty('--op1', (1 - p1).toFixed(3));
-        scrollRef.current.style.setProperty('--y1', `${(p1 * -40).toFixed(1)}px`);
-        scrollRef.current.style.setProperty('--s1', (1 - p1 * 0.03).toFixed(3));
+        scrollRef.current.style.setProperty('--op1', (1 - t1).toFixed(3));
+        scrollRef.current.style.setProperty('--y1', `${(t1 * -40).toFixed(1)}px`);
+        scrollRef.current.style.setProperty('--s1', (1 - t1 * 0.03).toFixed(3));
 
-        scrollRef.current.style.setProperty('--op2', p2.toFixed(3));
-        scrollRef.current.style.setProperty('--y2', `${((1 - p2) * 40).toFixed(1)}px`);
-        scrollRef.current.style.setProperty('--pe2', p2 > 0.5 ? 'auto' : 'none');
+        scrollRef.current.style.setProperty('--op2', t1.toFixed(3));
+        scrollRef.current.style.setProperty('--y2', `${((1 - t1) * 40).toFixed(1)}px`);
+        scrollRef.current.style.setProperty('--pe2', t1 > 0.5 ? 'auto' : 'none');
       }
       ticking = false;
     };
@@ -78,25 +90,22 @@ const FeaturedWorks = () => {
 
           {/* Project 02 */}
           <div className={`${styles.projectCardContainer} ${styles.card2}`}>
-            <div className={`${styles.projectCard} ${styles.dripBg} ${styles.dripCard}`}>
-              <div className={`${styles.projectContent} ${styles.darkText}`}>
+            <div className={`${styles.projectCard} ${styles.poiseBg}`}>
+              <div className={styles.projectContent}>
                 <div className={`${styles.projectNumber} ${styles.blueColor}`}>02</div>
-                <h3 className={styles.projectTitle}>Drip</h3>
+                <h3 className={styles.poiseTitle}>Poise</h3>
                 <p className={styles.projectDesc}>
-                  An AI-powered personal style assistant providing curated wardrobe analytics, onboarding flows, and bespoke styling choices.
+                  An AI wardrobe app that turns clothes you already own into daily outfit combinations.
                 </p>
-                <span className={styles.cta} aria-disabled="true">Coming soon</span>
+                <a href="#/projects/poise" className={`${styles.cta} ${styles.poiseCta}`}>View case study <span className={styles.arrow}>↗</span></a>
               </div>
               <div className={styles.projectVisual}>
-                <div className={styles.imageMockupDark}></div>
+                <img
+                  src={poiseMockup}
+                  alt="Poise – AI wardrobe app"
+                  className={styles.poiseMockupImg}
+                />
               </div>
-              <div className={styles.dripComingSoon}>
-                <div className={styles.dripComingSoonText}>
-                  <span className={styles.dripComingSoonTitle}>Coming soon</span>
-                  <span className={styles.dripComingSoonSubtitle}>Case study in progress</span>
-                </div>
-              </div>
-              <span className={styles.dripMobileBadge}>Coming soon</span>
             </div>
           </div>
         </div>

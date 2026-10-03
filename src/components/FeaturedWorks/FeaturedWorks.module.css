@@ -58,9 +58,8 @@
   background: #FCF4FF;
 }
 
-.dripBg {
-  background: #111111;
-  color: white;
+.poiseBg {
+  background: #F0E9E2;
 }
 
 .projectContent {
@@ -69,10 +68,6 @@
   flex-direction: column;
   justify-content: center;
   position: relative;
-}
-
-.darkText {
-  color: white;
 }
 
 .projectNumber {
@@ -89,6 +84,20 @@
 .projectTitle {
   font-size: 32px;
   font-weight: 600;
+  margin-bottom: 24px;
+}
+
+/* Poise wordmark: temporary Fraunces stand-in for the "Sooner" font
+   (not available on any font CDN — see conversation for a note on this).
+   Size/weight/margin matched to .projectTitle so it sits at the same scale
+   as the other cards' titles — only the font-family and color differ. */
+.poiseTitle {
+  font-family: 'Fraunces', var(--font-family-display), serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.1;
+  color: #705B4D;
   margin-bottom: 24px;
 }
 
@@ -131,7 +140,17 @@
   background: #f0f0f0;
 }
 
+.poiseCta {
+  background: #000000;
+  color: #F0E9E2;
+}
+
+.poiseCta:hover {
+  background: #1a1a1a;
+}
+
 .projectVisual {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,15 +165,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.imageMockupDark {
-  width: 50%;
-  height: 90%;
-  background: #2a2a2a;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
 .mailmintHeroImg {
   width: 95%;
   height: auto;
@@ -165,60 +175,26 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-.dripComingSoon,
-.dripMobileBadge {
-  display: none;
-}
-
-.dripComingSoon {
+/* Poise mockup: using the clean phone cutout (poise-phone-clean.png, shadow
+   stripped out) with an explicit CSS drop-shadow reproducing the Figma spec
+   (Angle 0° / Distance 128 / 10% & 15%) — see conversation notes for the
+   exact interpretation and values used. Positioned top-anchored, not
+   centered, so only the bottom of the phone bleeds past the card edge. */
+.poiseMockupImg {
   position: absolute;
-  inset: 0;
-  z-index: 2;
-  align-items: center;
-  justify-content: center;
-  background: rgba(17, 17, 17, 0.78);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  pointer-events: none;
-}
-
-.dripComingSoonText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-}
-
-.dripComingSoonTitle {
-  color: white;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.dripComingSoonSubtitle {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 13px;
-}
-
-.dripCard:hover .dripComingSoon {
-  opacity: 1;
-}
-
-.dripCard:hover .projectContent,
-.dripCard:hover .projectVisual {
-  opacity: 0.12;
-  transition: opacity 0.25s ease;
-}
-
-.dripCard .projectContent,
-.dripCard .projectVisual {
-  transition: opacity 0.25s ease;
+  top: 32px;
+  left: 0;
+  height: 490px;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  display: block;
+  filter: drop-shadow(40px 0 55px rgba(20, 16, 12, 0.16));
 }
 
 @media (min-width: 901px) {
   .scrollSection {
-    height: 250vh;
+    height: 380vh;
   }
 
   .stickyWrapper {
@@ -249,10 +225,6 @@
       will-change: transform, opacity;
     }
   }
-
-  .dripComingSoon {
-    display: flex;
-  }
 }
 
 @media (max-width: 900px) {
@@ -274,20 +246,17 @@
     border-radius: 12px;
   }
 
-  .dripMobileBadge {
-    display: inline-flex;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 3;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.2px;
+  /* FLAG FOR REVIEW: no mobile design was provided for the Poise card —
+     this just reuses the site's generic stacked-card fallback (text above
+     mockup, image centered and scaled to fit) so the card isn't broken on
+     small screens. Sizing/spacing here is a functional placeholder, not a
+     deliberate mobile design. */
+  .poiseMockupImg {
+    position: static;
+    transform: none;
+    height: auto;
+    width: 70%;
+    margin: 0 auto;
   }
 }
 
@@ -333,13 +302,5 @@
     opacity: 1;
     transform: none;
     pointer-events: auto;
-  }
-
-  .dripComingSoon {
-    display: none;
-  }
-
-  .dripMobileBadge {
-    display: inline-flex;
   }
 }

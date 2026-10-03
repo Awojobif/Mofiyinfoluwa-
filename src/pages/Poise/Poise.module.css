@@ -1,0 +1,708 @@
+/* ───────── Shell (match the other case studies at handoff) ───────── */
+.header {
+  position: fixed;
+  top: 24px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.main { padding-top: 104px; }
+.content { width: 100%; overflow-x: clip; }
+.visuallyHidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ───────── Hero ─────────
+   Positions come from the 1440px-wide Figma frame. The stage scales with its
+   width (container query units: 1cqw = 14.4px at 1440). */
+.hero { position: relative; }
+
+.heroStage {
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  aspect-ratio: 1440 / 740;
+}
+
+.pillGroup {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pillsLeft   { top: 2.7cqw; left: 1.95cqw; max-width: 24cqw; }
+.pillsRight  { top: 2.7cqw; right: 1.95cqw; max-width: 15cqw; justify-content: flex-end; }
+.pillsCenter { top: 1.5cqw; left: 50%; transform: translateX(-50%); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px #000000;   /* 1px stroke, inside */
+  background: #ffffff;
+  font-family: var(--font-family-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.heroArt { position: absolute; inset: 0; z-index: 1; }
+
+.heroWordmark {
+  position: absolute;
+  z-index: 1;
+  left: 16.9cqw;
+  top: 14.2cqw;
+  width: 66.7cqw;
+  aspect-ratio: 285 / 103;
+  /* Figma fill: linear #575757 @24% → #000000 @100%, softened to match the frame */
+  background: linear-gradient(90deg, rgba(87, 87, 87, 0.24) 0%, #000000 100%);
+  opacity: 0.17;
+  -webkit-mask: var(--wordmark) center / contain no-repeat;
+  mask: var(--wordmark) center / contain no-repeat;
+  pointer-events: none;
+}
+
+.heroPhone {
+  position: absolute;
+  z-index: 2;
+  left: 38cqw;
+  top: 0.6cqw;
+  width: 57.8cqw;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.clothesRack {
+  display: block;
+  width: 100%;
+  max-width: 1440px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Tablet tweak */
+@media (max-width: 1199px) {
+  .pill { font-size: 12px; padding: 8px 10px; }
+}
+
+/* Mobile: pills stacked on top, phone centred over the wordmark */
+@media (max-width: 900px) {
+  .heroStage { aspect-ratio: auto; padding: 16px 16px 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .pillGroup, .pillsCenter { position: static; transform: none; max-width: none; justify-content: center; }
+  .pillsCenter { order: -1; }
+  .pill { font-size: 12px; padding: 8px 10px; }
+  .heroArt { position: relative; inset: auto; width: 100vw; height: 128vw; margin-top: 24px; }
+  .heroWordmark { left: 4vw; top: 30vw; width: 92vw; }
+  .heroPhone { left: 14vw; top: -20vw; width: 173vw; }
+}
+
+/* ───────── Shared page type ───────── */
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  color: #000000;
+}
+.nowrap { white-space: nowrap; }
+.emoji { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+
+/* Handwritten asides (Caveat) — page-scoped, add the Caveat font link at handoff */
+.handNote {
+  margin: 0;
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+  color: #000000;
+}
+
+/* ───────── What even is Poise? ───────── */
+.about {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 31px 0;
+}
+
+.points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 48px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.point { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.pointDot {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px #000000;
+}
+.pointText {
+  margin: 0;
+  max-width: 450px;
+  font-family: var(--font-family-sans);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  color: #000000;
+}
+
+.noteRow { position: relative; height: 175px; }
+.aboutArrow {
+  position: absolute;
+  left: calc(54.1% - 31px);
+  top: 18px;
+  width: 172px;
+  height: auto;
+}
+.handNote.aboutNote { position: absolute; left: calc(63.6% - 31px); top: 120px; white-space: nowrap; }
+
+/* ───────── Quote ───────── */
+.quoteBlock {
+  position: relative;
+  max-width: 1440px;
+  height: 660px;
+  margin: 88px auto 0;
+  border-radius: 90px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.quoteImage {
+  position: absolute;
+  top: 0;
+  left: -12.5%;
+  width: 125%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+/* Progressive blur: a blurred copy of the photo, faded in from the top (0) to the bottom (full) */
+.quoteBlur {
+  filter: blur(40px);
+  transform: scale(1.08);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 22%, #000 68%);
+  mask-image: linear-gradient(to bottom, transparent 22%, #000 68%);
+}
+/* Frame fill: #666666 @0% → #000000 @50% (stop at 70%) */
+.quoteShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(102, 102, 102, 0) 0%, rgba(0, 0, 0, 0.5) 70%);
+}
+.quoteText {
+  position: absolute;
+  left: 50%;
+  bottom: 70px;
+  width: min(1100px, 86%);
+  margin: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-family-sans);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* ───────── So what's the problem? ───────── */
+.problem { max-width: 1440px; margin: 0 auto; padding: 80px 31px 0; }
+.sectionSubtitle {
+  margin: 12px 0 0;
+  font-family: var(--font-family-sans);
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  color: #000000;
+}
+.problem .points { margin-top: 44px; }
+.pointText strong { font-weight: 700; }
+
+/* ───────── Where did this actually come from? ───────── */
+.origin { max-width: 1440px; margin: 0 auto; padding: 120px 31px 0; }
+.originBody {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 960px;
+  margin: 44px auto 0;
+}
+.originBar {
+  flex: none;
+  align-self: stretch;
+  width: 6px;
+  min-height: 118px;
+  border-radius: 17px;
+  background: #C4A99A;
+}
+.originText {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 2;
+  color: #000000;
+}
+
+/* ───────── Persona ───────── */
+.persona { max-width: 1440px; margin: 0 auto; padding-top: 210px; }
+.personaCard {
+  position: relative;
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: 57.9% 1fr;
+  min-height: 678px;
+  border-radius: 70px;
+  background: #F5EFE6;
+  overflow: hidden;
+}
+.personaArt { position: relative; }
+.personaImage {
+  position: absolute;
+  left: 1.7cqw;
+  bottom: 0;
+  width: 35.6cqw;
+  max-width: none;
+  height: auto;
+}
+.personaArrowMobile { display: none; }
+.handNote.personaQuote {
+  position: absolute;
+  left: 31.2cqw;
+  top: 80px;
+  width: 23.5cqw;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.personaArrow {
+  position: absolute;
+  left: 29cqw;
+  top: 168px;
+  width: 9cqw;
+  height: auto;
+}
+.personaInfo { padding: 60px 94px 60px 0; }
+.personaName {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000000;
+}
+.personaRole {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 15px;
+  border-radius: 37px;
+  background: #EEE1D4;
+  font-family: var(--font-family-sans);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  color: #000000;
+}
+.personaPoints { margin: 28px 0 0; padding: 0; list-style: none; }
+.personaPoint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+}
+.personaPoint + .personaPoint { border-top: 1px solid #E6DCD1; }
+.personaPoint p {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #000000;
+}
+.personaPoint strong { font-weight: 700; }
+.personaIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #EFE6DB;
+  color: #000000;
+}
+.personaIcon svg { width: 22px; height: 22px; }
+.handNote.personaCaption {
+  width: 290px;
+  margin: 58px 94px 0 auto;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+@media (max-width: 1199px) {
+  .personaInfo { padding: 48px 40px 48px 0; }
+  .personaName { font-size: 40px; }
+  .personaRole, .personaPoint p { font-size: 17px; }
+  .handNote.personaQuote { font-size: 16px; top: 56px; }
+  .personaArrow { top: 140px; }
+}
+
+/* ───────── So what did I build? ───────── */
+.build { max-width: 1440px; margin: 0 auto; padding: 168px 31px 0; }
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+  max-width: 1138px;
+  margin: 72px auto 0;
+}
+.feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.featureFlip .featureText { order: 2; }
+.featureFlip .featureMedia { order: 1; }
+.featureText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.featureText .pointText { max-width: 400px; }
+.featureMedia { display: flex; justify-content: center; }
+
+/* iPhone mockup (matches the hero phone) */
+.phone {
+  position: relative;
+  --pw: 368px;
+  width: var(--pw);
+  max-width: 100%;
+  aspect-ratio: 535 / 1110;
+  padding: calc(var(--pw) * 0.031);
+  border-radius: 15.5% / 7.5%;
+  background: #141414;
+  box-shadow:
+    inset 0 0 0 1.5px #565656,
+    inset 0 0 0 3px #1c1c1c,
+    34px 42px 80px rgba(0, 0, 0, 0.13);
+}
+.phone::before, .phone::after {           /* side buttons */
+  content: "";
+  position: absolute;
+  width: 3px;
+  border-radius: 2px;
+  background: #3a3a3a;
+}
+.phone::before { left: -3px; top: 18%; height: 6%; }
+.phone::after  { right: -3px; top: 25%; height: 9%; }
+.phoneScreen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12.6% / 5.9%;
+  background: #ffffff;
+}
+.phoneVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* leave a status-bar strip under the island so the app header isn't covered */
+  padding-top: 13%;
+  object-fit: contain;
+  object-position: center top;
+  background: #ffffff;
+}
+.phoneIsland {
+  position: absolute;
+  top: 3.4%;
+  left: 50%;
+  width: 27%;
+  height: 3.6%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #0b0b0b;
+}
+
+/* Home screen PNG (phone + its own shadow), cropped to the same phone size */
+.phoneShot {
+  position: relative;
+  width: 368px;
+  max-width: 100%;
+  aspect-ratio: 535 / 1110;
+}
+.phoneShot img {
+  position: absolute;
+  left: -14.95%;
+  top: -27.93%;
+  width: 315.1%;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ───────── Poise wasn't always Poise ───────── */
+.pivot { max-width: 1440px; margin: 0 auto; padding: 168px 31px 0; }
+.pivotText {
+  max-width: 960px;
+  margin: 44px auto 0;
+  font-family: var(--font-family-sans);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 2;
+  text-align: center;
+  color: #000000;
+}
+.pivotText p { margin: 0; }
+
+/* ───────── Product screens (endless rows) ───────── */
+.screens { padding-top: 168px; }
+.marqueeRows { display: flex; flex-direction: column; gap: 90px; margin-top: 72px; padding: 20px 0 60px; }
+.marquee { overflow: hidden; padding: 6px 0 56px; margin-bottom: -56px; }
+.marqueeTrack { display: flex; width: max-content; }
+.marqueeSet { display: flex; gap: 60px; padding-right: 60px; }
+.toRight { animation: poiseMarqueeRight 70s linear infinite; }
+.toLeft  { animation: poiseMarqueeLeft 70s linear infinite; }
+.marquee:hover .marqueeTrack { animation-play-state: paused; }
+@keyframes poiseMarqueeRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes poiseMarqueeLeft  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .toRight, .toLeft { animation: none; }
+}
+
+.phone.phoneSmall { --pw: 280px; flex: none; box-shadow: inset 0 0 0 1.5px #565656, inset 0 0 0 3px #1c1c1c, 18px 24px 40px rgba(0, 0, 0, 0.12); }
+.phoneImage { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+
+/* ───────── Technical section (case files, collapsed by default) ─────────
+   Palette matches the persona card; spacing rhythm matches .build / .pivot. */
+.technical { max-width: 1440px; margin: 0 auto; padding: 168px 31px 0; }
+.caseFileList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 820px;
+  margin: 44px auto 0;
+}
+.caseFile {
+  border-radius: 28px;
+  background: #F5EFE6;
+  overflow: hidden;
+}
+.caseFileHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 28px;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.caseFileTitle {
+  font-family: var(--font-family-sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+}
+.caseFileChevron {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: #000000;
+  transition: transform 0.2s ease;
+}
+.caseFileChevronOpen { transform: rotate(180deg); }
+.caseFileBody { padding: 0 28px 28px; }
+.caseFileBody p {
+  margin: 0 0 16px;
+  font-family: var(--font-family-sans);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #000000;
+}
+.caseFileBody p:last-child { margin-bottom: 0; }
+
+@media (max-width: 900px) {
+  .technical { padding-top: 96px; }
+  .caseFileList { margin-top: 28px; gap: 10px; }
+  .caseFileHeader { padding: 18px 20px; }
+  .caseFileTitle { font-size: 16px; }
+  .caseFileBody { padding: 0 20px 20px; }
+  .caseFileBody p { font-size: 16px; }
+}
+
+/* ───────── Live demo ───────── */
+.demo { max-width: 1440px; margin: 0 auto; padding: 168px 31px 120px; }
+.demoStage { position: relative; display: flex; justify-content: center; margin-top: 56px; }
+.phone.demoPhone { --pw: 340px; }
+/* The Poise app insets its own headers below the Dynamic Island when
+   embedded (window.self !== window.top), so the viewport can run edge to
+   edge here. */
+.demoViewport { position: absolute; left: 0; right: 0; bottom: 0; top: 0; overflow: hidden; background: #ffffff; }
+.demoFrame { position: absolute; top: 0; left: 0; border: 0; background: #ffffff; transform-origin: top left; }
+/* Home screen shown while the iframe loads; fades out once it fires 'load'. */
+.demoLoadingImg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+.demoLoadingImgHidden { opacity: 0; pointer-events: none; }
+
+.demoNoteWrap {
+  position: absolute;
+  left: calc(50% + 260px);
+  top: 46%;
+  width: 360px;
+}
+.demoArrow { position: absolute; left: -82px; top: -40px; width: 104px; height: auto; }
+.demoArrowMobile { display: none; }
+.handNote.demoNote { font-size: 20px; line-height: 1.5; }
+.handNote.demoNote strong { font-weight: 700; }
+
+@media (max-width: 1199px) {
+  .pointText { font-size: 18px; }
+  .handNote.aboutNote { left: auto; right: 4%; }
+  .aboutArrow { left: 44%; }
+  .quoteText { font-size: 38px; }
+  .phone { --pw: 300px; }
+  .phone.demoPhone { --pw: 300px; }
+  .demoNoteWrap { left: calc(50% + 184px); width: 270px; }
+  .demoArrow { left: -40px; width: 56px; top: -30px; }
+  .handNote.demoNote { font-size: 17px; }
+  .phoneShot { width: 300px; }
+}
+
+@media (max-width: 900px) {
+  .about { padding: 64px 20px 0; }
+  .sectionTitle { font-size: 34px; }
+  .points { grid-template-columns: 1fr; gap: 36px; margin-top: 36px; }
+  .pointText { font-size: 17px; }
+  .noteRow { height: auto; display: flex; flex-direction: column; align-items: center; padding-top: 28px; }
+  .aboutArrow { position: static; width: 64px; transform: rotate(20deg); }
+  .handNote.aboutNote { position: static; width: auto; white-space: normal; margin-top: 8px; font-size: 22px; }
+  .problem { padding-top: 72px; }
+  .origin { padding-top: 88px; }
+  .originBody { margin-top: 28px; gap: 16px; }
+  .originText { font-size: 16px; line-height: 1.8; }
+  .persona { padding-top: 96px; }
+  .personaCard { grid-template-columns: 1fr; border-radius: 40px; min-height: 0; }
+  .personaArt { height: auto; display: flex; flex-direction: column; align-items: center; padding-top: 24px; }
+  .personaImage { position: static; transform: none; width: 70vw; max-width: 380px; order: 3; }
+  .handNote.personaQuote { position: static; width: auto; max-width: 520px; padding: 0 20px; transform: none; font-size: 17px; order: 1; }
+  .personaArrow { display: none; }
+  /* Speech pointer: from her head up to her words, so it reads as her talking */
+  .personaArrowMobile { display: block; width: 46px; height: auto; margin: 6px 0 -26px 26%; position: relative; z-index: 1; order: 2; }
+  .personaInfo { padding: 32px 20px 28px; }
+  .personaName { font-size: 32px; }
+  .personaRole, .personaPoint p { font-size: 16px; }
+  .handNote.personaCaption { width: auto; margin: 24px 20px 0; text-align: center; }
+  .pivot { padding-top: 96px; }
+  .pivotText { font-size: 17px; line-height: 1.8; margin-top: 28px; }
+  .screens { padding-top: 96px; }
+  .marqueeRows { gap: 40px; margin-top: 40px; }
+  .marqueeSet { gap: 24px; padding-right: 24px; }
+  .phone.phoneSmall { --pw: 180px; }
+  .demo { padding: 96px 20px 80px; }
+  .demoStage { flex-direction: column; align-items: center; margin-top: 32px; }
+  .phone.demoPhone { --pw: min(72vw, 300px); order: 3; }
+  .demoNoteWrap { position: static; width: auto; max-width: 520px; display: flex; flex-direction: column; align-items: center; order: 1; }
+  .demoArrow { display: none; }
+  .demoArrowMobile { display: block; order: 2; width: 70px; height: auto; margin: 10px 0 14px; transform: rotate(18deg); }
+  .handNote.demoNote { order: 1; font-size: 18px; }
+  .build { padding-top: 96px; }
+  .features { gap: 64px; margin-top: 40px; }
+  .feature { grid-template-columns: 1fr; gap: 28px; }
+  .featureFlip .featureText { order: 0; }
+  .featureFlip .featureMedia { order: 0; }
+  .phone { --pw: min(64vw, 300px); }
+  .phoneShot { width: min(64vw, 300px); }
+  .quoteBlock { height: 520px; margin-top: 56px; border-radius: 40px; }
+  .quoteText { font-size: 24px; bottom: 40px; width: 88%; }
+  .nextCtaName { font-size: 30px; }
+}
+
+/* ───────── Footer: "Next project" (same markup/styles/icon as MailMint) ─────────
+   .footer here is just this page's own horizontal container (matching every
+   other section's max-width/padding convention); nextCta supplies its own
+   border-top and vertical spacing, same as on MailMint. */
+.footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 31px 64px;
+}
+
+.nextCta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 48px;
+  margin-top: 96px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nextCtaLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.nextCtaName {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-family-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  transition: color 0.25s ease;
+}
+
+.nextCtaArrow {
+  font-size: 0.75em;
+  transition: transform 0.25s ease;
+}
+
+.nextCta:hover .nextCtaName {
+  color: var(--color-purple);
+}
+
+.nextCta:hover .nextCtaArrow {
+  transform: translateX(6px);
+}
