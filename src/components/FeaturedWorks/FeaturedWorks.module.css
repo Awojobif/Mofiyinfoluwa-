@@ -179,7 +179,8 @@
    stripped out) with an explicit CSS drop-shadow reproducing the Figma spec
    (Angle 0° / Distance 128 / 10% & 15%) — see conversation notes for the
    exact interpretation and values used. Positioned top-anchored, not
-   centered, so only the bottom of the phone bleeds past the card edge. */
+   centered, so only the bottom of the phone bleeds past the card edge,
+   matching Frame_668.png. */
 .poiseMockupImg {
   position: absolute;
   top: 32px;
@@ -194,7 +195,7 @@
 
 @media (min-width: 901px) {
   .scrollSection {
-    height: 380vh;
+    height: 360vh;
   }
 
   .stickyWrapper {
@@ -219,10 +220,12 @@
       top: 0;
       left: 0;
       right: 0;
+      z-index: 1;
       opacity: var(--op2, 0);
-      transform: translateY(var(--y2, 40px));
+      transform: translateY(var(--y2, 40px)) scale(var(--s2, 1));
       pointer-events: var(--pe2, none);
       will-change: transform, opacity;
+      transform-origin: center bottom;
     }
   }
 }

@@ -557,7 +557,7 @@
 }
 
 /* ───────── Live demo ───────── */
-.demo { max-width: 1440px; margin: 0 auto; padding: 168px 31px 120px; }
+.demo { max-width: 1440px; margin: 0 auto; padding: 168px 31px 0; }
 .demoStage { position: relative; display: flex; justify-content: center; margin-top: 56px; }
 .phone.demoPhone { --pw: 340px; }
 /* The Poise app insets its own headers below the Dynamic Island when
@@ -589,6 +589,96 @@
 .demoArrowMobile { display: none; }
 .handNote.demoNote { font-size: 20px; line-height: 1.5; }
 .handNote.demoNote strong { font-weight: 700; }
+
+/* ───────── Close (That's a wrap… for V1) ───────── */
+.close {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 168px 31px 0;
+}
+
+.closeContent {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.closeLead {
+  margin: 44px auto 0;
+  font-family: var(--font-family-sans);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.8;
+  text-align: center;
+  color: #000000;
+}
+
+.closeCards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.closeCard {
+  border-radius: 28px;
+  background: #F5EFE6;
+  padding: 32px 36px;
+}
+
+.closeCardTitle {
+  margin: 0 0 16px;
+  font-family: var(--font-family-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.closeCardText {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #000000;
+}
+
+.closeCardText strong {
+  font-weight: 700;
+}
+
+.closeList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.closeListItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.closeListDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #000000;
+  margin-top: 11px;
+  flex: none;
+}
+
+.closePunchline {
+  margin: 72px auto 0;
+  font-family: var(--font-family-display);
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+  color: #000000;
+}
 
 @media (max-width: 1199px) {
   .pointText { font-size: 18px; }
@@ -633,13 +723,20 @@
   .marqueeRows { gap: 40px; margin-top: 40px; }
   .marqueeSet { gap: 24px; padding-right: 24px; }
   .phone.phoneSmall { --pw: 180px; }
-  .demo { padding: 96px 20px 80px; }
+  .demo { padding: 96px 20px 0; }
   .demoStage { flex-direction: column; align-items: center; margin-top: 32px; }
   .phone.demoPhone { --pw: min(72vw, 300px); order: 3; }
   .demoNoteWrap { position: static; width: auto; max-width: 520px; display: flex; flex-direction: column; align-items: center; order: 1; }
   .demoArrow { display: none; }
   .demoArrowMobile { display: block; order: 2; width: 70px; height: auto; margin: 10px 0 14px; transform: rotate(18deg); }
   .handNote.demoNote { order: 1; font-size: 18px; }
+  .close { padding-top: 96px; }
+  .closeLead { font-size: 17px; line-height: 1.7; margin-top: 28px; }
+  .closeCards { margin-top: 36px; gap: 12px; }
+  .closeCard { padding: 22px 20px; border-radius: 20px; }
+  .closeCardTitle { font-size: 18px; margin-bottom: 12px; }
+  .closeCardText { font-size: 16px; }
+  .closePunchline { font-size: 24px; margin-top: 48px; }
   .build { padding-top: 96px; }
   .features { gap: 64px; margin-top: 40px; }
   .feature { grid-template-columns: 1fr; gap: 28px; }
@@ -649,32 +746,57 @@
   .phoneShot { width: min(64vw, 300px); }
   .quoteBlock { height: 520px; margin-top: 56px; border-radius: 40px; }
   .quoteText { font-size: 24px; bottom: 40px; width: 88%; }
-  .nextCtaName { font-size: 30px; }
+  .footerNav {
+    flex-direction: column;
+    gap: 36px;
+  }
+  .navCtaNext {
+    align-items: flex-start;
+    text-align: left;
+    margin-left: 0;
+  }
+  .navCtaName {
+    font-size: 28px;
+  }
 }
 
-/* ───────── Footer: "Next project" (same markup/styles/icon as MailMint) ─────────
-   .footer here is just this page's own horizontal container (matching every
-   other section's max-width/padding convention); nextCta supplies its own
-   border-top and vertical spacing, same as on MailMint. */
+/* ───────── Footer: Project Navigation ───────── */
 .footer {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 31px 64px;
 }
 
-.nextCta {
+.footerNav {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 10px;
   border-top: 1px solid var(--color-border);
   padding-top: 48px;
   margin-top: 96px;
+  gap: 32px;
+}
+
+.navCta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   text-decoration: none;
   color: inherit;
 }
 
-.nextCtaLabel {
+.navCtaPrev {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.navCtaNext {
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
+}
+
+.navCtaLabel {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -682,27 +804,31 @@
   color: var(--color-muted);
 }
 
-.nextCtaName {
+.navCtaName {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   font-family: var(--font-family-display);
-  font-size: clamp(28px, 4vw, 40px);
+  font-size: clamp(24px, 3.5vw, 40px);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--color-text);
   transition: color 0.25s ease;
 }
 
-.nextCtaArrow {
+.navCtaArrow {
   font-size: 0.75em;
   transition: transform 0.25s ease;
 }
 
-.nextCta:hover .nextCtaName {
+.navCta:hover .navCtaName {
   color: var(--color-purple);
 }
 
-.nextCta:hover .nextCtaArrow {
+.navCtaPrev:hover .navCtaArrow {
+  transform: translateX(-6px);
+}
+
+.navCtaNext:hover .navCtaArrow {
   transform: translateX(6px);
 }

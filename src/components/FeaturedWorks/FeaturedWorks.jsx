@@ -12,12 +12,11 @@ const FeaturedWorks = () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    // Timeline: HOLD → TRANSITION → HOLD, as a fraction of the pinned scroll
-    // range. MailMint stays fully settled (opacity pinned at exactly 1),
-    // eases out as Poise eases in, then Poise stays fully settled for the
-    // rest of the scroll.
-    const TRANSITION_START = 0.45;
-    const TRANSITION_END = 0.54;
+    // Timeline: HOLD → TRANSITION → HOLD, as fractions of the pinned scroll
+    // range. MailMint holds fully visible, eases out as Poise eases in, then
+    // Poise holds fully visible for the rest of the scroll.
+    const TRANSITION_1_START = 0.35;
+    const TRANSITION_1_END   = 0.60;
 
     const smoothstep = (edge0, edge1, x) => {
       const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
@@ -31,7 +30,7 @@ const FeaturedWorks = () => {
         let p = maxScroll > 0 ? -rect.top / maxScroll : 0;
         p = Math.max(0, Math.min(1, p));
 
-        const t1 = smoothstep(TRANSITION_START, TRANSITION_END, p);
+        const t1 = smoothstep(TRANSITION_1_START, TRANSITION_1_END, p);
 
         scrollRef.current.style.setProperty('--op1', (1 - t1).toFixed(3));
         scrollRef.current.style.setProperty('--y1', `${(t1 * -40).toFixed(1)}px`);
@@ -39,6 +38,7 @@ const FeaturedWorks = () => {
 
         scrollRef.current.style.setProperty('--op2', t1.toFixed(3));
         scrollRef.current.style.setProperty('--y2', `${((1 - t1) * 40).toFixed(1)}px`);
+        scrollRef.current.style.setProperty('--s2', '1');
         scrollRef.current.style.setProperty('--pe2', t1 > 0.5 ? 'auto' : 'none');
       }
       ticking = false;

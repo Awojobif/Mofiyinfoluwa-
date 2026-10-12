@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
+import { getProjectNavigation } from '../../utils/projects'
 import styles from './Poise.module.css'
 
 import heroPhone from '../../assets/poise/heroPhone.webp'
@@ -229,6 +230,14 @@ function Pill({ children }) {
   return <li className={styles.pill}>{children}</li>
 }
 
+function ArrowLeftIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M19 12H5M12 19l-7-7 7-7" />
+    </svg>
+  )
+}
+
 // Matches the arrow-right icon used in the "Next project" link on the
 // MailMint case study page.
 function ArrowRightIcon(props) {
@@ -301,6 +310,7 @@ function CaseFile({ title, body }) {
 }
 
 export default function Poise() {
+  const { prev: prevProject, next: nextProject, home: homeRoute } = getProjectNavigation('poise')
   return (
     <>
       <div className={styles.header}>
@@ -506,17 +516,98 @@ export default function Poise() {
               </div>
             </div>
           </section>
+
+          {/* ───────────── CLOSE ───────────── */}
+          <section className={styles.close} aria-label="Conclusion">
+            <h2 className={styles.sectionTitle}>
+              That's a wrap… <span className={styles.nowrap}>for V1. <span className={styles.emoji}>✨</span></span>
+            </h2>
+
+            <div className={styles.closeContent}>
+              <p className={styles.closeLead}>
+                Getting to a version people could actually use meant going back to the drawing board and protecting the one thing that mattered: open your closet, get an outfit. What shipped is a live web app, a fully stocked demo, and a core experience built and tested end to end, up to the AI call.
+              </p>
+
+              <div className={styles.closeCards}>
+                <div className={styles.closeCard}>
+                  <h3 className={styles.closeCardTitle}>What I'd do differently</h3>
+                  <p className={styles.closeCardText}>
+                    Define the smallest possible version first, before anything else gets scoped in. I started with the full vision already as the plan, and every feature needed more features to support it, so the scope kept expanding before I'd built a single screen. Once I cut it down to the one loop that mattered, the whole rebuild took under 10 days. If I'd started there, I'd have been done far sooner.
+                  </p>
+                </div>
+
+                <div className={styles.closeCard}>
+                  <h3 className={styles.closeCardTitle}>What I'm taking with me</h3>
+                  <ul className={styles.closeList}>
+                    <li className={styles.closeListItem}>
+                      <span className={styles.closeListDot} aria-hidden="true" />
+                      <p className={styles.closeCardText}>
+                        <strong>Meet people where they are.</strong> Nobody downloads an app to look at a portfolio, so Poise went web-first. One click and you're in.
+                      </p>
+                    </li>
+                    <li className={styles.closeListItem}>
+                      <span className={styles.closeListDot} aria-hidden="true" />
+                      <p className={styles.closeCardText}>
+                        <strong>Trust, but verify.</strong> Building with AI meant moving fast, and also checking every claim before acting on it.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className={styles.closeCard}>
+                  <h3 className={styles.closeCardTitle}>What's next</h3>
+                  <ul className={styles.closeList}>
+                    <li className={styles.closeListItem}>
+                      <span className={styles.closeListDot} aria-hidden="true" />
+                      <p className={styles.closeCardText}>
+                        Turning on live AI styling.
+                      </p>
+                    </li>
+                    <li className={styles.closeListItem}>
+                      <span className={styles.closeListDot} aria-hidden="true" />
+                      <p className={styles.closeCardText}>
+                        Mannequin styling shaped to each user's body type, the full vision from the designs.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <p className={styles.closePunchline}>
+                Poise wasn't built to fill your closet. It was built to help you finally <span className={styles.nowrap}>use it. <span className={styles.emoji}>🤍</span></span>
+              </p>
+            </div>
+          </section>
         </article>
       </main>
 
       <footer className={styles.footer}>
-        {/* Next project in the portfolio's order after Poise: Cove. */}
-        <a href="#/projects/cove" className={styles.nextCta} aria-label="Next project">
-          <span className={styles.nextCtaLabel}>NEXT PROJECT</span>
-          <span className={styles.nextCtaName}>
-            Next Project <ArrowRightIcon className={styles.nextCtaArrow} />
-          </span>
-        </a>
+        <nav className={styles.footerNav} aria-label="Project navigation">
+          {prevProject && (
+            <a href={prevProject.path} className={`${styles.navCta} ${styles.navCtaPrev}`} aria-label="Previous project">
+              <span className={styles.navCtaLabel}>PREVIOUS PROJECT</span>
+              <span className={styles.navCtaName}>
+                <ArrowLeftIcon className={styles.navCtaArrow} /> Previous Project
+              </span>
+            </a>
+          )}
+
+          {nextProject ? (
+            <a href={nextProject.path} className={`${styles.navCta} ${styles.navCtaNext}`} aria-label="Next project">
+              <span className={styles.navCtaLabel}>NEXT PROJECT</span>
+              <span className={styles.navCtaName}>
+                Next Project <ArrowRightIcon className={styles.navCtaArrow} />
+              </span>
+            </a>
+          ) : (
+            <a href={homeRoute} className={`${styles.navCta} ${styles.navCtaNext}`} aria-label="Go back home">
+              <span className={styles.navCtaLabel}>BACK TO HOME</span>
+              <span className={styles.navCtaName}>
+                Go Back Home <ArrowRightIcon className={styles.navCtaArrow} />
+              </span>
+            </a>
+          )}
+        </nav>
       </footer>
     </>
   )

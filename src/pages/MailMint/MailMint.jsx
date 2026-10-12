@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './MailMint.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Lightbox from '../../components/Lightbox/Lightbox';
+import { getProjectNavigation } from '../../utils/projects';
 import mailmintHero from '../../assets/Mockup image.png';
 import generationImg from '../../assets/mailmint-generation.webp';
 import loginImg from '../../assets/mailmint-login.webp';
@@ -178,6 +179,7 @@ const Collapsible = ({ preview, children }) => {
 
 const MailMint = () => {
   const [lightbox, setLightbox] = useState(null);
+  const { prev: prevProject, next: nextProject, home: homeRoute } = getProjectNavigation('mailmint');
 
   return (
     <div className={styles.page}>
@@ -516,13 +518,33 @@ const MailMint = () => {
             </div>
           </section>
 
-          {/* NEXT PROJECT CTA: single instance */}
-          <a href="#/" className={styles.nextCta} aria-label="Next project">
-            <span className={styles.nextCtaLabel}>NEXT PROJECT</span>
-            <span className={styles.nextCtaName}>
-              Next Project <Icon.ArrowRight className={styles.nextCtaArrow} />
-            </span>
-          </a>
+          {/* PROJECT NAVIGATION */}
+          <nav className={styles.footerNav} aria-label="Project navigation">
+            {prevProject && (
+              <a href={prevProject.path} className={`${styles.navCta} ${styles.navCtaPrev}`} aria-label="Previous project">
+                <span className={styles.navCtaLabel}>PREVIOUS PROJECT</span>
+                <span className={styles.navCtaName}>
+                  <Icon.ArrowLeft className={styles.navCtaArrow} /> Previous Project
+                </span>
+              </a>
+            )}
+
+            {nextProject ? (
+              <a href={nextProject.path} className={`${styles.navCta} ${styles.navCtaNext}`} aria-label="Next project">
+                <span className={styles.navCtaLabel}>NEXT PROJECT</span>
+                <span className={styles.navCtaName}>
+                  Next Project <Icon.ArrowRight className={styles.navCtaArrow} />
+                </span>
+              </a>
+            ) : (
+              <a href={homeRoute} className={`${styles.navCta} ${styles.navCtaNext}`} aria-label="Go back home">
+                <span className={styles.navCtaLabel}>BACK TO HOME</span>
+                <span className={styles.navCtaName}>
+                  Go Back Home <Icon.ArrowRight className={styles.navCtaArrow} />
+                </span>
+              </a>
+            )}
+          </nav>
         </article>
       </main>
 

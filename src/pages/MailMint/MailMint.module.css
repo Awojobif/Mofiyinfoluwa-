@@ -763,20 +763,37 @@
   margin-bottom: 0;
 }
 
-/* ---------- Next Project CTA (single) ---------- */
-.nextCta {
+/* ---------- Project Navigation ---------- */
+.footerNav {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 10px;
   border-top: 1px solid var(--color-border);
   padding-top: 48px;
   margin-top: 96px;
+  gap: 32px;
+}
+
+.navCta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   text-decoration: none;
   color: inherit;
 }
 
-.nextCtaLabel {
+.navCtaPrev {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.navCtaNext {
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
+}
+
+.navCtaLabel {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -784,28 +801,32 @@
   color: var(--color-muted);
 }
 
-.nextCtaName {
+.navCtaName {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   font-family: var(--font-family-display);
-  font-size: clamp(28px, 4vw, 40px);
+  font-size: clamp(24px, 3.5vw, 40px);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--color-text);
   transition: color 0.25s ease;
 }
 
-.nextCtaArrow {
+.navCtaArrow {
   font-size: 0.75em;
   transition: transform 0.25s ease;
 }
 
-.nextCta:hover .nextCtaName {
+.navCta:hover .navCtaName {
   color: var(--color-purple);
 }
 
-.nextCta:hover .nextCtaArrow {
+.navCtaPrev:hover .navCtaArrow {
+  transform: translateX(-6px);
+}
+
+.navCtaNext:hover .navCtaArrow {
   transform: translateX(6px);
 }
 
@@ -900,8 +921,19 @@
     padding: 40px 28px;
   }
 
-  .nextCtaName {
-    font-size: 30px;
+  .footerNav {
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .navCtaNext {
+    align-items: flex-start;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .navCtaName {
+    font-size: 28px;
   }
 }
 
