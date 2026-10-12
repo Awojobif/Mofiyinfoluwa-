@@ -5,7 +5,6 @@ import logo from '../../assets/Header logo copy 1.svg';
 const NAV_LINKS = [
   { href: '#work', label: 'Work' },
   { href: '#about', label: 'About' },
-  { href: '#contact', label: 'Contact' },
 ];
 
 const Navbar = () => {
@@ -24,10 +23,6 @@ const Navbar = () => {
         <div className={styles.links}>
           <a href="#work" className={styles.link}>Work</a>
           <a href="#about" className={styles.link}>About</a>
-        </div>
-
-        <div className={styles.contact}>
-          <a href="#contact" className={styles.link}>Contact</a>
         </div>
 
         <button

@@ -5,7 +5,6 @@ import MusicPlayer from '../../components/MusicPlayer/MusicPlayer';
 import Hero from '../../components/Hero/Hero';
 import FeaturedWorks from '../../components/FeaturedWorks/FeaturedWorks';
 import AboutPreview from '../../components/AboutPreview/AboutPreview';
-import Contact from '../../components/Contact/Contact';
 import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
@@ -29,7 +28,6 @@ const Home = () => {
           <Hero />
           <FeaturedWorks />
           <AboutPreview />
-          <Contact />
           <Footer />
         </section>
       </main>

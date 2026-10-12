@@ -23,10 +23,13 @@ const ProfileCard = ({ musicPlayer }) => {
       <hr className={styles.divider} />
 
       <div className={styles.bottomSection}>
-        <div className={styles.socials}>
-          <a href="https://www.linkedin.com/in/creativeformina/" target="_blank" rel="noopener noreferrer" className={styles.icon}>in</a>
-          <a href="https://www.behance.net/fiyinfoluwaAJ" target="_blank" rel="noopener noreferrer" className={styles.icon}>Be</a>
-          <a href="mailto:awojobifiyin@gmail.com" className={styles.icon}>@</a>
+        <div className={styles.contactGroup}>
+          <span className={styles.contactLabel}>Contact me</span>
+          <div className={styles.socials}>
+            <a href="https://www.linkedin.com/in/creativeformina/" target="_blank" rel="noopener noreferrer" className={styles.icon}>in</a>
+            <a href="https://www.behance.net/fiyinfoluwaAJ" target="_blank" rel="noopener noreferrer" className={styles.icon}>Be</a>
+            <a href="mailto:awojobifiyin@gmail.com" className={styles.icon}>@</a>
+          </div>
         </div>
         <a href="/Fiyin_Awojobi_Resume.pdf" target="_blank" rel="noreferrer" className={styles.resumeBtn}>View my resume <span className={styles.arrow}>↗</span></a>
       </div>
