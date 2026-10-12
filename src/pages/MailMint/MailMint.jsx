@@ -549,7 +549,7 @@ const MailMint = () => {
       </main>
 
       <footer className={styles.footer}>
-        <a href="#/" className={styles.backLink}>
+        <a href="/" className={styles.backLink}>
           <Icon.ArrowLeft /> Back to portfolio
         </a>
       </footer>

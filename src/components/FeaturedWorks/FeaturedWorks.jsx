@@ -76,7 +76,7 @@ const FeaturedWorks = () => {
                 <p className={styles.projectDesc}>
                   An AI-powered email marketing platform designed to simplify campaign creation, onboarding, automation and analytics for modern businesses.
                 </p>
-                <a href="#/projects/mailmint" className={styles.cta}>View case study <span className={styles.arrow}>↗</span></a>
+                <a href="/projects/mailmint" className={styles.cta}>View case study <span className={styles.arrow}>↗</span></a>
               </div>
               <div className={styles.projectVisual}>
                 <img
@@ -97,7 +97,7 @@ const FeaturedWorks = () => {
                 <p className={styles.projectDesc}>
                   An AI wardrobe app that turns clothes you already own into daily outfit combinations.
                 </p>
-                <a href="#/projects/poise" className={`${styles.cta} ${styles.poiseCta}`}>View case study <span className={styles.arrow}>↗</span></a>
+                <a href="/projects/poise" className={`${styles.cta} ${styles.poiseCta}`}>View case study <span className={styles.arrow}>↗</span></a>
               </div>
               <div className={styles.projectVisual}>
                 <img

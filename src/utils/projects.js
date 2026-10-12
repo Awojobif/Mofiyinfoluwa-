@@ -1,6 +1,6 @@
 export const PROJECTS = [
-  { id: 'mailmint', name: 'MailMint', path: '#/projects/mailmint' },
-  { id: 'poise', name: 'Poise', path: '#/projects/poise' },
+  { id: 'mailmint', name: 'MailMint', path: '/projects/mailmint' },
+  { id: 'poise', name: 'Poise', path: '/projects/poise' },
 ];
 
 export function getProjectNavigation(currentId) {
@@ -11,6 +11,6 @@ export function getProjectNavigation(currentId) {
   return {
     prev,
     next,
-    home: '#/',
+    home: '/',
   };
 }

@@ -3,8 +3,8 @@ import styles from './Navbar.module.css';
 import logo from '../../assets/Header logo copy 1.svg';
 
 const NAV_LINKS = [
-  { href: '#work', label: 'Work' },
-  { href: '#about', label: 'About' },
+  { href: '/#work', label: 'Work' },
+  { href: '/#about', label: 'About' },
 ];
 
 const Navbar = () => {
@@ -15,14 +15,14 @@ const Navbar = () => {
     <>
       <nav className={styles.navbar}>
         <div className={styles.logo}>
-          <a href="#/" className={styles.logoLink} aria-label="Back to portfolio homepage">
+          <a href="/" className={styles.logoLink} aria-label="Back to portfolio homepage">
             <img src={logo} alt="Portfolio logo" className={styles.logoMark} />
           </a>
         </div>
 
         <div className={styles.links}>
-          <a href="#work" className={styles.link}>Work</a>
-          <a href="#about" className={styles.link}>About</a>
+          <a href="/#work" className={styles.link}>Work</a>
+          <a href="/#about" className={styles.link}>About</a>
         </div>
 
         <button
